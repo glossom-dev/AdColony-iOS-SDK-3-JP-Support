@@ -7,23 +7,14 @@
 <td>AdColony-iOS-SDK</td>
 <td><a href="https://github.com/AdColony/AdColony-iOS-SDK-3">https://github.com/AdColony/AdColony-iOS-SDK-3</a></td>
 </tr>
-<tr>
-<td>AdColony-Unity-SDK</td>
-<td><a href="https://github.com/AdColony/AdColony-Unity-SDK">https://github.com/AdColony/AdColony-Unity-SDK</a></td>
-</tr>
-<tr>
-<td>AdColony-AdobeAIR-SDK</td>
-<td><a href="https://github.com/AdColony/AdColony-AdobeAIR-SDK">https://github.com/AdColony/AdColony-AdobeAIR-SDK</a></td>
-</tr>
 </table>
-
 
 ###Notes###
 
 - iOS 10で動作保証されています
-- ATSに完全に対応しています
-- iOS 6.0以上に対応しています（動画広告はiOS 7.0以上のみ対応しています）
-- 主要なAPIの変更により、バージョン2.XのSDKと後方互換生はありません
+- ATS仕様に準拠しています
+- iOS 6.0以上に対応しています（動画広告はiOS 7.0以上のみ対応）
+- 主要なAPIの変更により、バージョン2.XのSDKと後方互換性はありません
 
 ###iOS 10###
 
@@ -37,6 +28,7 @@ iOS10にて追加された新しい仕様の中に、本SDKの実装に影響を
 * [Xcode Project Setup](#xcode-project-setup)
 * [インタースティシャル広告](#インタースティシャル広告)
 * [リワードインタースティシャル広告](#リワードインタースティシャル広告)
+* [APIリファレンス](#apiリファレンス)
 * [よくある質問](#よくある質問)
     * [基本情報に関して](#基本情報に関して)
     * [SDK仕様に関して](#sdk仕様に関して)
@@ -65,7 +57,7 @@ SDKのバージョンを指定してインストールする必要がある場�
 pod 'AdColony', '3.0.4.1'
 ```
 
-その他に必要な導入作業は[こちら](#サポートする端末の向きを設定)をご覧ください。
+続いて[こちら](#4-サポートする端末の向きを設定)からセットアップを行ってください。
  
 ###CocoaPodsを使わないインストール方法###
 
@@ -118,9 +110,22 @@ AdColony SDK はクラスローディングの機能を利用します。した�
 
 AdColony SDKはあなたのアプリが全ての端末の向きをサポートすることを要求します。これはAdColonyの広告があらゆる向きで表示される可能性があり、AdColonyのview controllerがあなたのアプリに同じ挙動を要求するからです。この要求は、あなたのアプリのインターフェースが全ての向きに対応するように指示しているわけではないことに注意してください。ただあなたのview controllerの`supportedInterfaceOrientations`メソッドで共通設定をオーバーライドする必要があるだけです。
 
-この要求を満たす最も簡単な方法は、XcodeのGeneralタブにあるDevice Orientation全てにチェックを入れることです。
+この要求を満たす最も簡単な方法は、Xcodeの **General** タブにあるDevice Orientation全てにチェックを入れることです。
 
 ![Supported Orientations](assets/supported-orientations-plist.png)
+
+もしくは **AppDelegate** クラスの`application:supportedInterfaceOrientationsForWindow:`メソッドを下記のようにオーバライドすることでも実現できます。
+
+```objc
+#import <AdColony/AdColony.h>
+
+@implementation AppDelegate
+/* Class body ... */
+
+-(UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
+    return UIInterfaceOrientationMaskAll;
+}
+```
 
 ####5. App Transport Security (ATS) の設定を追加####
 
@@ -440,12 +445,16 @@ PRIMARY KEY (`id`)
 
 - "vc_success"
   - 正常に処理が終了しユーザーへのリワード付与が成功した場合。AdColony側から再送信を行いません。
-- "vc_decline" or "vc_noreward"
+- "vc\_decline" or "vc\_noreward"
   - 正常に処理が終了したが、uidの誤り/不正と判断された場合。AdColony側から再送信を行いません。
 - その他
   - AdColonyは定期的に再送信を行います。異常な場合以外はこちらの利用は控えて下さい。
 
 **Note:** リワードを付与しなくても良いケースは、uidが不正な場合、セキュリティチェックに通過しない場合、トランザクションが重複していて既にリワードが付与されている場合、のみです。
+
+##APIリファレンス##
+
+SDKのAPIリファレンスは[こちら](https://adcolony-www-common.s3.amazonaws.com/Appledoc/3.0.4/index.html)をご参照ください。
 
 ##よくある質問##
 
@@ -472,7 +481,7 @@ PRIMARY KEY (`id`)
 
 可能です。御社側で、動画視聴の成果通知に合わせてご実装して頂く必要がございます。
 
-#### Q: custom_idの設定する方法おしえてください。
+#### Q: custom_idの設定方法を教えてください。
 
 custom_idはSDKの環境設定時に引数として渡す`AdColonyAppOptions`のオブジェクトで以下のように指定することで設定することが可能です。`AdColonyAppOptions`の詳細は[こちら](https://adcolony-www-common.s3.amazonaws.com/Appledoc/3.0.4/Classes/AdColonyAppOptions.html)
 
@@ -485,7 +494,7 @@ options.userID = @"/* custom_id */";
 					 completion:^(NSArray<AdColonyZone*>* zones) {}];
 ```
 
-#### Q:  V4VCのサーバー側のレスポンスと再送信
+#### Q: サーバサイド リワードのレスポンスと再送信について
 
 下記でございます。
 
@@ -526,12 +535,9 @@ AdColonyは定期的に再送信行います。異常な場合以外は、こち
 
 #### Q: App内で広告を消した方が良いか？
 
-審査する場合も、広告を出してください。IDFAについては下記をチェックを必ず行って下さい。
+審査する場合も広告を出してください。IDFAについては下記の項目に必ずチェックを入れて下さい。
 
-- Does this app use the Advertising Identifier (IDFA)?
-	- Yes
-- Serve advertisements within the app
-	- チェック
+![](assets/itunes-connect-idfa.png)
 
 #### Q: テスト切り替えの際の連絡はいつしたら良いか？
 
