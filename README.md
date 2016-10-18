@@ -224,9 +224,9 @@ Glossomがお渡しするapp IDとzone IDを使ってAdColony SDKの環境設定
                 NSLog(@"Ad closed");
             };
             ad.expire = ^{
-	    	// adの有効期限が切れたら再度リクエストする
+                // adの有効期限が切れたら再度リクエストする
                 NSLog(@"Ad expired");
-		[self requestInterstitial];
+                [self requestInterstitial];
             };
 
             _ad = ad;
