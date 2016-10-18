@@ -306,10 +306,15 @@ Glossomがお渡しするapp IDとzone IDを使ってAdColony SDKの環境設定
     [AdColony requestInterstitialInZone:/* Zone ID */ options:nil
         success:^(AdColonyInterstitial* ad) {
             ad.open = ^{
-                NSLog(@"SDKTESTAPP: Ad opened");
+                NSLog(@"Ad opened");
             };
             ad.close = ^{
-                NSLog(@"SDKTESTAPP: Ad closed");
+                NSLog(@"Ad closed");
+            };
+            ad.expire = ^{
+                // adの有効期限が切れたら再度リクエストする
+                NSLog(@"Ad expired");
+                [self requestInterstitial];
             };
 
             _ad = ad;
