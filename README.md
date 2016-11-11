@@ -93,6 +93,7 @@ pod 'AdColony', '3.0.5'
 * `Social.framework`
 * `StoreKit.framework`
 * `SystemConfiguration.framework`
+* `WatchConnectivity.framework` (Set to Optional)
 * `WebKit.framework` (Set to Optional)
 
 ![Frameworks and libraries](assets/frameworks-libraries.png)
