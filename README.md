@@ -54,7 +54,7 @@ pod 'AdColony'
 SDKのバージョンを指定してインストールする必要がある場合、[CocoaPod repository](https://github.com/CocoaPods/Specs/tree/master/Specs/AdColony)に存在するバージョンであれば、下記のような指定で導入することもできます。
 
 ```bash
-pod 'AdColony', '3.0.4.1'
+pod 'AdColony', '3.0.5'
 ```
 
 続いて[こちら](#4-サポートする端末の向きを設定)からセットアップを行ってください。
