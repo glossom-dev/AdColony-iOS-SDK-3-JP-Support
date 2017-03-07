@@ -54,7 +54,7 @@ pod 'AdColony'
 SDKのバージョンを指定してインストールする必要がある場合、[CocoaPod repository](https://github.com/CocoaPods/Specs/tree/master/Specs/AdColony)に存在するバージョンであれば、下記のような指定で導入することもできます。
 
 ```bash
-pod 'AdColony', '3.0.5'
+pod 'AdColony', '~> 3.1.0'
 ```
 
 続いて[こちら](#4-サポートする端末の向きを設定)からセットアップを行ってください。
@@ -128,14 +128,14 @@ AdColony SDKはあなたのアプリが全ての端末の向きをサポート�
 }
 ```
 
-####5. App Transport Security (ATS) の設定を追加####
+####5. App Transport Security (ATS) の無効化####
 
-iOS 9のリリースと共にAppleはATSを導入しました。これはアプリにSSLによるセキュアなネットワーク接続をするよう要求するものであり、SSLのバージョン、暗号化方式、およびキーの長さについてATSの仕様に則ってHTTPS接続を強制します。AdColonyの広告がディスク上の関連したアセットにアクセスできるように、AdColony SDKはいくつかのローカルネットワーキングについてHTTPで実行されることを要求します。この要求の副作用として、開発者は以下の項目をplistファイルに追加する必要があります。
+iOS 9のリリースと共にAppleはATSを導入しました。ATSはアプリにSSLによるセキュアなネットワーク接続をするよう要求するものであり、SSLのバージョン、暗号化方式、およびキーの長さについてATSの仕様に則ってHTTPS接続を強制します。AdColonyの広告とリワードがATSの制限を受けないようにするために、以下の項目をplistファイルに追加してATSを無効化してください。
 
 ```xml
 <key>NSAppTransportSecurity</key>
 <dict>
-    <key> NSAllowsLocalNetworking</key>
+    <key>NSAllowsArbitraryLoads</key>
     <true/>
 </dict>
 ```
@@ -465,7 +465,7 @@ PRIMARY KEY (`id`)
 
 ##APIリファレンス##
 
-SDKのAPIリファレンスは[こちら](https://adcolony-www-common.s3.amazonaws.com/Appledoc/3.0.4/index.html)をご参照ください。
+SDKのAPIリファレンスは[こちら](https://adcolony-www-common.s3.amazonaws.com/Appledoc/3.1.0/index.html)をご参照ください。
 
 ##よくある質問##
 
@@ -494,7 +494,7 @@ SDKのAPIリファレンスは[こちら](https://adcolony-www-common.s3.amazona
 
 #### Q: custom_idの設定方法を教えてください。
 
-custom_idはSDKの環境設定時に引数として渡す`AdColonyAppOptions`のオブジェクトで以下のように指定することで設定することが可能です。`AdColonyAppOptions`の詳細は[こちら](https://adcolony-www-common.s3.amazonaws.com/Appledoc/3.0.4/Classes/AdColonyAppOptions.html)
+custom_idはSDKの環境設定時に引数として渡す`AdColonyAppOptions`のオブジェクトで以下のように指定することで設定することが可能です。`AdColonyAppOptions`の詳細は[こちら](https://adcolony-www-common.s3.amazonaws.com/Appledoc/3.1.0/Classes/AdColonyAppOptions.html)
 
 ```objc
 AdColonyAppOptions *options = [AdColonyAppOptions new];
