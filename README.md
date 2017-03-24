@@ -1,6 +1,6 @@
 ![AdColony Logo and Title](assets/logo-title.png)
 
-###AdColony SDK取得URL###
+### AdColony SDK取得URL ###
 
 <table>
 <tr>
@@ -9,21 +9,21 @@
 </tr>
 </table>
 
-###Notes###
+### Notes ###
 
 - iOS 10で動作保証されています。
 - ATS仕様に準拠しています。
 - iOS 6.0以上に対応しています（動画広告はiOS 7.0以上のみ対応）。
 - 主要なAPIの変更により、バージョン2.XのSDKと後方互換性はありません。
 
-###iOS 10###
+### iOS 10 ###
 
 iOS10にて追加された新しい仕様の中に、本SDKの実装に影響を及ぼすものが存在します。  
 詳細は[Xcode Project Setup](#xcode-project-setup)を参照してください。
 
 ----
 
-###Contents###
+### Contents ###
 
 * [Xcode Project Setup](#xcode-project-setup)
 * [インタースティシャル広告](#インタースティシャル広告)
@@ -36,13 +36,13 @@ iOS10にて追加された新しい仕様の中に、本SDKの実装に影響を
     * [ストア申請に関して](#ストア申請に関して)
 
 
-##Xcode Project Setup##
+## Xcode Project Setup ##
 
-###iOS 10###
+### iOS 10 ###
 
 iOS 10に関連する導入手順の変更点は[こちら](#7-プライバシーコントロールの設定を追加)をご覧下さい。
 
-###CocoaPodsを使うインストール方法###
+### CocoaPodsを使うインストール方法 ###
 
 [CocoaPods](https://cocoapods.org)は、AdColonyを導入するもっとも簡単な方法です。  
 下記をPodfileに設定することで最新のAdColonyをXcodeプロジェクトに導入することができます。
@@ -59,7 +59,7 @@ pod 'AdColony', '~> 3.1.0'
 
 続いて[こちら](#4-サポートする端末の向きを設定)からセットアップを行ってください。
  
-###CocoaPodsを使わないインストール方法###
+### CocoaPodsを使わないインストール方法 ###
 
 1. FrameworkをXcodeプロジェクトに追加
 2. 必須の依存ライブラリをリンク
@@ -69,7 +69,7 @@ pod 'AdColony', '~> 3.1.0'
 6. AdColonyが利用するURLスキームの設定を追加
 7. プライバシーコントロールの設定を追加
 
-####1. FrameworkをXcodeプロジェクトに追加####
+#### 1. FrameworkをXcodeプロジェクトに追加 ####
 
 `AdColony.framework`をプロジェクトにコピー(ドラッグ)してください。また、AdColonyを利用する全てのターゲットにチェックを入れてください。
 
@@ -77,7 +77,7 @@ pod 'AdColony', '~> 3.1.0'
 
 ![Architectures and Base SDK version](assets/architectures.png)
 
-####2. 必須の依存ライブラリをリンク####
+#### 2. 必須の依存ライブラリをリンク ####
 
 **Target > Build Phases > Link Binary With Libraries** を開いて、下記のライブラリとフレームワークを追加してください。
 
@@ -98,7 +98,7 @@ pod 'AdColony', '~> 3.1.0'
 
 ![Frameworks and libraries](assets/frameworks-libraries.png)
 
-####3. リンカーフラグを追加####
+#### 3. リンカーフラグを追加 ####
 
 AdColony SDK はクラスローディングの機能を利用します。したがって以下のリンカーフラグを **Target > Build Settings > Linking > Other Linker Flags** に追加する必要があります。
 
@@ -107,7 +107,7 @@ AdColony SDK はクラスローディングの機能を利用します。した�
 
 ![Configure Linker Flags](assets/linker-flags.png)
 
-####4. サポートする端末の向きを設定####
+#### 4. サポートする端末の向きを設定 ####
 
 AdColony SDKはあなたのアプリが全ての端末の向きをサポートすることを要求します。これはAdColonyの広告があらゆる向きで表示される可能性があり、AdColonyのview controllerがあなたのアプリに同じ挙動を要求するからです。この要求は、あなたのアプリのインターフェースが全ての向きに対応するように指示しているわけではないことに注意してください。ただあなたのview controllerの`supportedInterfaceOrientations`メソッドで共通設定をオーバーライドする必要があるだけです。
 
@@ -128,7 +128,7 @@ AdColony SDKはあなたのアプリが全ての端末の向きをサポート�
 }
 ```
 
-####5. App Transport Security (ATS) の無効化####
+#### 5. App Transport Security (ATS) の無効化 ####
 
 iOS 9のリリースと共にAppleはATSを導入しました。ATSはアプリにSSLによるセキュアなネットワーク接続をするよう要求するものであり、SSLのバージョン、暗号化方式、およびキーの長さについてATSの仕様に則ってHTTPS接続を強制します。AdColonyの広告とリワードがATSの制限を受けないようにするために、以下の項目をplistファイルに追加してATSを無効化してください。
 
@@ -140,7 +140,7 @@ iOS 9のリリースと共にAppleはATSを導入しました。ATSはアプリ�
 </dict>
 ```
 
-####6. AdColonyが利用するURLスキームの設定を追加####
+#### 6. AdColonyが利用するURLスキームの設定を追加 ####
 
 iOS 9のリリースと共にAppleは`canOpenURL:` APIの使用についても制限するようになりました。AdColonyはDynamic End Cards (DECs)からユーザが特定のアプリを開けるかどうかを判断するためにこのAPIを使用しています。例えば、新しい映画のための広告があり、そのDECがTwitterアプリを利用してユーザにその映画についてtweetできるような機能を提示することができます。このような機能はiOS 9ではまだ利用可能ですが、パブリッシャはAdColonyがリンクされてるアプリに対して、それぞれのURLスキームをplistファイルで認可しなければなりません。URLスキームが追加されてない場合、代わりにユーザはWEBサイトに連れて行かれてしまうことに注意してください。これは例えばサイトにログインしないといけないなどの望ましくないユーザエクスペリエンスを招く可能性があります。AdColony SDKがアプリへのdeep-linkingを可能にするために、以下の項目をアプリのplistに追加してください。
 
@@ -154,7 +154,7 @@ iOS 9のリリースと共にAppleは`canOpenURL:` APIの使用についても�
 </array>
 ```
 
-####7. プライバシーコントロールの設定を追加####
+#### 7. プライバシーコントロールの設定を追加 ####
 
 iOS 10では、Appleはカメラやフォトライブラリなどの機能へのアクセスを制限することによってプライバシーコントロールの範囲を拡張しました。ダイナミックエンドカードのため、AdColony SDKがこれらの機能を使う時にアプリがクラッシュするのを避けるために、以下の項目をアプリのplistに追加する必要があります。
 
@@ -171,11 +171,11 @@ iOS 10では、Appleはカメラやフォトライブラリなどの機能への
 
 アプリを Xcode 7（iOS 9 SDK）でコンパイルする場合は、これらの項目の追加は必要ありません。
 
-##インタースティシャル広告##
+## インタースティシャル広告 ##
 
 AdColonyインタースティシャル広告は、動画広告の再生直後にエンドカードが続く形式の広告です。
 
-###Instructions###
+### Instructions ###
 
 [Xcode Project Setup](#xcode-project-setup)を終えたら下記の４ステップでインタースティシャル広告を表示することができます。
 
@@ -184,7 +184,7 @@ AdColonyインタースティシャル広告は、動画広告の再生直後に
 3. インタースティシャル広告をAdColonyにリクエスト
 4. 広告を表示
 
-###Code Example - Configuring AdColony###
+### Code Example - Configuring AdColony ###
 
 Glossomがお渡しするapp IDとzone IDを使ってAdColony SDKの環境設定を行ってください。
 
@@ -207,7 +207,7 @@ Glossomがお渡しするapp IDとzone IDを使ってAdColony SDKの環境設定
 }
 ```
 
-###Code Example - Requesting an Interstitial###
+### Code Example - Requesting an Interstitial ###
 
 ```objc
 #import <AdColony/AdColony.h>
@@ -239,7 +239,7 @@ Glossomがお渡しするapp IDとzone IDを使ってAdColony SDKの環境設定
 }
 ```
 
-###Code Example - Showing the Interstitial###
+### Code Example - Showing the Interstitial ###
 
 インタースティシャル広告のリクエスト成功のコールバックで渡される`AdColonyInterstitial`オブジェクトを利用して、適切なタイミングでフルスクリーンの広告を表示してください。
 
@@ -254,11 +254,11 @@ Glossomがお渡しするapp IDとzone IDを使ってAdColony SDKの環境設定
 }
 ```
 
-##動画リワード広告##
+## 動画リワード広告 ##
 
 AdColonyの動画リワード広告はインセンティブ（仮想通貨やユーザー体験）が付随しているかどうかという点において通常のインタースティシャル広告と異なります。ユーザがリワード広告を見たときにSDKはユーザに対してインセンティブを付与します。
 
-###Instructions###
+### Instructions ###
 
 [Xcode Project Setup](#xcode-project-setup)を終えたら下記の４ステップで動画リワード広告を表示することができます。
 
@@ -267,7 +267,7 @@ AdColonyの動画リワード広告はインセンティブ（仮想通貨やユ
 3. インタースティシャル広告をAdColonyにリクエスト
 4. 広告を表示
 
-###Code Example - Configuring the SDK with a Rewarded Zone###
+### Code Example - Configuring the SDK with a Rewarded Zone ###
 
 Glossomがお渡しするapp IDとzone IDを使ってAdColony SDKの環境設定を行ってください。  
 さらにzoneのリワードハンドラも設定してください。
@@ -295,7 +295,7 @@ Glossomがお渡しするapp IDとzone IDを使ってAdColony SDKの環境設定
 }
 ```
 
-###Code Example - Requesting a Rewarded Interstitial###
+### Code Example - Requesting a Rewarded Interstitial ###
 
 ```objc
 #import <AdColony/AdColony.h>
@@ -327,7 +327,7 @@ Glossomがお渡しするapp IDとzone IDを使ってAdColony SDKの環境設定
 }
 ```
 
-###Code Example - Showing the Rewarded Interstitial###
+### Code Example - Showing the Rewarded Interstitial ###
 
 インタースティシャル広告のリクエスト成功のコールバックで渡される`AdColonyInterstitial`オブジェクトを利用して、適切なタイミングでフルスクリーンの広告を表示してください。
 
@@ -344,17 +344,17 @@ Glossomがお渡しするapp IDとzone IDを使ってAdColony SDKの環境設定
 
 ----
 
-###サーバサイド リワード###
+### サーバサイド リワード ###
 
 あなたの仮想通貨経済をセキュアにするためにAdColonyはコールバックを実行します。AdColonyは、仮想通貨を扱うサーバに直接セキュリティのためにハッシングメッセージを使用するコールバックを発行します。AdColonyのリワードインタースティシャル広告を用いてユーザにリワードを付与するために、あなたのゲームサーバ上にコールバックURLを作成してください。AdColonyはそのコールバックURLに対してURLパラメータを付与するので、そのパラメータを用いてあなたのシステム上でユーザの仮想通貨残高を更新します。
 
 AdColonyではクライアントサイドだけで仮想通貨をハンドリングすることも可能です。しかしクライアントサイドでセキュアな仮想通貨システムを作ることはできないため、その方法の利用は推奨されていないことに注意してください。私たちはクライアントサイドのシステムを難解にするために最善を尽くしていますが、そのセキュリティを保証することはできません。あなたの仮想通貨システムを管理するためにサーバを使用することができない場合、使用上のガイドラインについては [video-ad@glossom.co.jp](video-ad@glossom.co.jp) にお問い合わせください。
 
-####Step 1 - Creating a callback URL####
+#### Step 1 - Creating a callback URL ####
 
 あなたのサーバ上にAdColonyのコールバックを受け取るURLを作成してください。コールバックURLは認証を要求しないようにしてください。URLを作成したら弊社の担当者にご連絡ください。弊社にてzoneのサーバサイドリワードを有効にし、ポストバック用のURLを設定致します。
 
-####Step 2 - Set custom ID####
+#### Step 2 - Set custom ID ####
 
 AdColony SDKにcustom\_idを設定してください。これは毎回コールバックするときにアプリのサーバサイドにも送信されます。custom_idを利用することで、リワードを付与するユーザを識別することができます。
 
@@ -367,7 +367,7 @@ options.userID = @"/* custom_id */";
 					 completion:^(NSArray<AdColonyZone*>* zones) {}];
 ```
 
-####Step 3 - Handling the AdColony Callbacks####
+#### Step 3 - Handling the AdColony Callbacks ####
 
 URLがAdColonyのコールバックに対して適切にレスポンスするようにしてください。AdColonyがコールするURLのフォーマットは下記です。`[]`が示す文字列は、あなたのアプリやトランザクジョンの内容によって異なります。
 
@@ -450,7 +450,7 @@ PRIMARY KEY (`id`)
 
 重複のトランザクションをチェックした後で、指定された種類と量の仮想通貨をユーザに付与してください。
 
-####Step 4 - Configuring Your Server's Responses####
+#### Step 4 - Configuring Your Server's Responses ####
 
 あなたのサーバがトランザクションの結果に基づいた適切なレスポンスをするように保証してください。
 
@@ -463,13 +463,13 @@ PRIMARY KEY (`id`)
 
 **Note:** リワードを付与しなくても良いケースは、uidが不正な場合、セキュリティチェックに通過しない場合、トランザクションが重複していて既にリワードが付与されている場合、のみです。
 
-##APIリファレンス##
+## APIリファレンス ##
 
 SDKのAPIリファレンスは[こちら](https://adcolony-www-common.s3.amazonaws.com/Appledoc/3.1.0/index.html)をご参照ください。
 
-##よくある質問##
+## よくある質問 ##
 
-###基本情報に関して###
+### 基本情報に関して ###
 
 #### Q:各設定情報はどんな意味ですか
 
@@ -478,7 +478,7 @@ SDKのAPIリファレンスは[こちら](https://adcolony-www-common.s3.amazona
 - **Call Back URL**: 動画再生の成果等を送るURLになります。設定していただかなくても本サービスはご利用頂けます。
 - **Custom ID**: CustomIDは、mediaのユーザーidを設定していただきます。設定した値はcall backを使用する場合、custom_idとして返します。
 
-###SDK仕様に関して###
+### SDK仕様に関して ###
 
 #### Q: AdColonyダイアログでポップアップの国別表記は可能か？
 
@@ -520,7 +520,7 @@ options.userID = @"/* custom_id */";
 AdColonyは定期的に再送信行います。異常な場合以外は、こちら利用は控えて下さい。
 ```
 
-###動画再生に関して###
+### 動画再生に関して ###
 
 #### Q: 動画再生ができない場合どうすればいいですか
 
@@ -542,7 +542,7 @@ AdColonyは定期的に再送信行います。異常な場合以外は、こち
 - ユーザー数が極端に少ない、リリース前もしくはリリース直後
 - androidの場合、GoogleのAdvertising IDを取得するため、プロジェクトの中にGoogle Play Services 4.0+ を追加してください。
 
-###ストア申請に関して###
+### ストア申請に関して ###
 
 #### Q: App内で広告を消した方が良いか？
 
