@@ -156,17 +156,17 @@ iOS 9のリリースと共にAppleは`canOpenURL:` APIの使用についても�
 
 #### 7. プライバシーコントロールの設定を追加 ####
 
-iOS 10では、Appleはカメラやフォトライブラリなどの機能へのアクセスを制限することによってプライバシーコントロールの範囲を拡張しました。ダイナミックエンドカードのため、AdColony SDKがこれらの機能を使う時にアプリがクラッシュするのを避けるために、以下の項目をアプリのplistに追加する必要があります。
+iOS 10のリリースに伴い、Appleはカメラやフォトライブラリなどの機能へのアクセスを制限することによってプライバシー管理の範囲を拡張しました。これらの機能を活用してリッチで没入的な体験をユーザに届けるために、以下の項目をアプリのplistファイルに追加してください。
 
 ```xml
 <key>NSCalendarsUsageDescription</key>
-<string>Adding events</string>
+<string>Some ad content may create a calendar event.</string>
 <key>NSPhotoLibraryUsageDescription</key>
-<string>Taking selfies</string>
+<string>Some ad content may require access to the photo library.</string>
 <key>NSCameraUsageDescription</key>
-<string>Taking selfies</string>
+<string>Some ad content may access camera to take picture.</string>
 <key>NSMotionUsageDescription </key>
-<string>Interactive ad controls</string>
+<string>Some ad content may require access to accelerometer for interactive ad experience.</string>
 ```
 
 アプリを Xcode 7（iOS 9 SDK）でコンパイルする場合は、これらの項目の追加は必要ありません。
