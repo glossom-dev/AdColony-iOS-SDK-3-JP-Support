@@ -128,7 +128,7 @@ AdColony SDKはあなたのアプリが全ての端末の向きをサポート�
 }
 ```
 
-#### 5. App Transport Security (ATS) の無効化 ####
+#### 5. App Transport Security (ATS) と iOS 10 ####
 
 iOS 9のリリースと共にAppleはATSを導入しました。ATSはアプリにSSLによるセキュアなネットワーク接続をするよう要求するものであり、SSLのバージョン、暗号化方式、およびキーの長さについてATSの仕様に則ってHTTPS接続を強制します。iOSではATSがデフォルトで有効になっていますが、現在のところAppleによって要求されたり強制されたりはしていません。
 
