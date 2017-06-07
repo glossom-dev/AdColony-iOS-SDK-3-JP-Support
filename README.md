@@ -132,7 +132,7 @@ AdColony SDKはあなたのアプリが全ての端末の向きをサポート�
 
 iOS 9のリリースと共にAppleはATSを導入しました。ATSはアプリにSSLによるセキュアなネットワーク接続をするよう要求するものであり、SSLのバージョン、暗号化方式、およびキーの長さについてATSの仕様に則ってHTTPS接続を強制します。iOSではATSがデフォルトで有効になっていますが、現在のところAppleによって要求されたり強制されたりはしていません。
 
-したがって、広告在庫を最大化したり可能な限り高いeCPMを受け取るために、次の2つの方法のいずれかを正しく設定することが重要です。
+したがって、AdColonyの広告とリワードがATSの制限を受けないようにするために、次の2つの方法のいずれかを正しく設定することが重要です。
 
 ##### 方法1: ATSを無効化して利用する
 
@@ -164,7 +164,7 @@ iOS 10でATSを有効のまま利用したい開発者は、下記の項目をIn
 </dict>
 ```
 
-ただし、`NSAllowsArbitraryLoadsInWebContent`をYESで追加することにより、アプリの審査の過程で「正当な理由」をAppleから求められることになります。その際は正当な理由として次の内容を説明する事をお勧めます。
+ただし、`NSAllowsArbitraryLoadsInWebContent`をYESで追加することにより、アプリの審査の過程で「正当な理由」をAppleから求められることになります。その際は正当な理由として次の内容を説明する事をお勧めします。
 
 > Must provide embedded web content from a variety of sources, but cannot use a class supported by the NSAllowsArbitraryLoadsInWebContent key.
 > 
