@@ -128,9 +128,13 @@ AdColony SDKはあなたのアプリが全ての端末の向きをサポート�
 }
 ```
 
-#### 5. App Transport Security (ATS) の無効化 ####
+#### 5. App Transport Security (ATS) と iOS 10 ####
 
-iOS 9のリリースと共にAppleはATSを導入しました。ATSはアプリにSSLによるセキュアなネットワーク接続をするよう要求するものであり、SSLのバージョン、暗号化方式、およびキーの長さについてATSの仕様に則ってHTTPS接続を強制します。AdColonyの広告とリワードがATSの制限を受けないようにするために、以下の項目をplistファイルに追加してATSを無効化してください。
+iOS 9のリリースと共にAppleはATSを導入しました。ATSはアプリにSSLによるセキュアなネットワーク接続をするよう要求するものであり、SSLのバージョン、暗号化方式、およびキーの長さについてATSの仕様に則ってHTTPS接続を強制します。iOSではATSがデフォルトで有効になっていますが、現在のところAppleによって要求されたり強制されたりはしていません。AdColonyでは、次の2つの方法のいずれかを正しく設定することが重要です。
+
+##### 方法1: ATSを無効化して利用する
+
+開発者はInfo.plistファイルに下記の項目を追加することでATSを無効化することができます。
 
 ```xml
 <key>NSAppTransportSecurity</key>
@@ -139,6 +143,30 @@ iOS 9のリリースと共にAppleはATSを導入しました。ATSはアプリ�
     <true/>
 </dict>
 ```
+
+##### 方法2: ATSは有効のまま利用する
+
+iOS 10では、`NSAllowsArbitraryLoadsInWebContent`と`NSAllowsLocalNetworking`が存在すると、`NSAllowsArbitraryLoads`の値がNOに上書きされる仕様になっています。これにより、iOS 10でATSを無効にすることなく、古いオペレーティングシステムでアプリケーションの必要に応じて`NSAllowsArbitraryLoads`をYESに設定できます。
+
+iOS 10でATSを有効のまま利用したい開発者は、下記の項目をInfo.plistファイルに追加する必要があります。
+
+```xml
+<key>NSAppTransportSecurity</key> 
+<dict>
+    <key>NSAllowsArbitraryLoads</key> 
+    <true/> 
+    <key>NSAllowsLocalNetworking</key> 
+    <true/> 
+    <key>NSAllowsArbitraryLoadsInWebContent</key> 
+    <true/>
+</dict>
+```
+
+ただし、`NSAllowsArbitraryLoadsInWebContent`をYESで追加することにより、アプリの審査の過程で「正当な理由」をAppleから求められることになります。その際は正当な理由として次の内容を説明する事をお勧めします。
+
+> Must provide embedded web content from a variety of sources, but cannot use a class supported by the NSAllowsArbitraryLoadsInWebContent key.
+> 
+> 様々なウェブコンテンツを表示する必要があるが NSAllowsArbitraryLoadsInWebContent がiOS 9で利用できないため
 
 #### 6. AdColonyが利用するURLスキームの設定を追加 ####
 
