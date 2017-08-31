@@ -1,25 +1,44 @@
 ![AdColony Logo and Title](assets/logo-title.png)
 
-### AdColony SDK取得URL ###
+最終更新日: 2017/08/24  
+SDKバージョン: 3.2.0
 
-<table>
-<tr>
-<td>AdColony-iOS-SDK</td>
-<td><a href="https://github.com/AdColony/AdColony-iOS-SDK-3">https://github.com/AdColony/AdColony-iOS-SDK-3</a></td>
-</tr>
-</table>
+## ダウンロード
+
+[https://github.com/AdColony/AdColony-iOS-SDK-3/releases/tag/v3.2.0](https://github.com/AdColony/AdColony-iOS-SDK-3/releases/tag/v3.2.0)
+
+## 概要
+
+AdColonyはゼロバッファリング、[フルスクリーンのInstant-Play™HDビデオ](https://www.adcolony.com/technology/instant-play/)、[インタラクティブAurora™ビデオ](https://www.adcolony.com/technology/auroravideo)、およびアプリケーション内のどこにでも表示できるAurora™Playable広告が含まれます。AdColonyの広告SDKは、世界のトップゲーミングおよびノンゲーミングのパブリッシャーによって信頼され、ブランド広告と掲載結果の広告主から最も高い収益化の機会を提供します。 AdColonyのSDKは、インストリーム/プレロール、アウトストリーム/インタースティシャル、V4VC™などの広範な広告フォーマットで収益を上げることができます。V4VC™は、ビデオや再生可能な広告の視聴完了時に仮想通貨でアプリのユーザーに報酬を与えるための安全なシステムです。
+
+## リリースノート
+
+### SDK 3.2 の主な機能:
+
+- いくつかのバグの修正と安定性・セキュリティの改善に加えて、iOS 11の互換性
+- スキップ機能の改善と新しいミュート/ミュート解除機能によるユーザーエクスペリエンスの向上
+- インストール後のイベントAPI
+- クラッシュレポートと新しい便利なテストモード機能
+
+過去のバージョンの[リリースノート](https://github.com/AdColony/AdColony-Android-SDK-3/blob/master/CHANGELOG.md)
+
+## アップグレード
+
+### SDK 2.X から
+
+2.x SDKからのアップデートは、ドラッグ＆ドロップのアップデートではなく、APIとプロセスの変更を含んでいます。3.x SDKを利用するには、完全な再統合が必要です。
+
+### SDK 3.X から
+
+以前のSDK 3.xからSDK 3.2.0へのアップデートでは、コードを変更する必要はありません。CocoaPodsを利用していない場合は、Xcodeプロジェクトにフレームワークをドラッグアンドドロップするだけです。Cocoapodsを利用している場合でも、`pod update`を実行して最新のものと同期するだけです。
+
+## Getting Started
 
 ### Notes ###
 
-- iOS 10で動作保証されています。
-- ATS仕様に準拠しています。
-- iOS 6.0以上に対応しています（動画広告はiOS 7.0以上のみ対応）。
-- 主要なAPIの変更により、バージョン2.XのSDKと後方互換性はありません。
-
-### iOS 10 ###
-
-iOS10にて追加された新しい仕様の中に、本SDKの実装に影響を及ぼすものが存在します。  
-詳細は[Xcode Project Setup](#xcode-project-setup)を参照してください。
+- SDK 3.2は、iOS 11 Beta 7バージョンでテストおよび検証されています
+- SDK 3.2はiOS 6でコンパイルされます。ただし、動画広告はiOS 7以上でのみ表示されます
+- SDK 3.2は、主要なAPIの変更により、AdColony 2.Xと下位互換性がありません
 
 ----
 
@@ -36,13 +55,11 @@ iOS10にて追加された新しい仕様の中に、本SDKの実装に影響を
     * [ストア申請に関して](#ストア申請に関して)
 
 
-## Xcode Project Setup ##
+## Xcode Project Setup
 
-### iOS 10 ###
+### Step 1: インストール
 
-iOS 10に関連する導入手順の変更点は[こちら](#7-プライバシーコントロールの設定を追加)をご覧下さい。
-
-### CocoaPodsを使うインストール方法 ###
+#### CocosPodsを使う方法
 
 [CocoaPods](https://cocoapods.org)は、AdColonyを導入するもっとも簡単な方法です。  
 下記をPodfileに設定することで最新のAdColonyをXcodeプロジェクトに導入することができます。
@@ -50,26 +67,14 @@ iOS 10に関連する導入手順の変更点は[こちら](#7-プライバシ�
 ```bash
 pod 'AdColony'
 ```
-
-SDKのバージョンを指定してインストールする必要がある場合、[CocoaPod repository](https://github.com/CocoaPods/Specs/tree/master/Specs/AdColony)に存在するバージョンであれば、下記のような指定で導入することもできます。
-
-```bash
-pod 'AdColony', '~> 3.1.0'
-```
-
-続いて[こちら](#4-サポートする端末の向きを設定)からセットアップを行ってください。
  
-### CocoaPodsを使わないインストール方法 ###
+#### CocoaPodsを使わない方法
 
 1. FrameworkをXcodeプロジェクトに追加
 2. 必須の依存ライブラリをリンク
 3. リンカーフラグを追加
-4. サポートする端末の向きを設定
-5. App Transport Security (ATS) の設定を追加
-6. AdColonyが利用するURLスキームの設定を追加
-7. プライバシーコントロールの設定を追加
 
-#### 1. FrameworkをXcodeプロジェクトに追加 ####
+##### FrameworkをXcodeプロジェクトに追加
 
 `AdColony.framework`をプロジェクトにコピー(ドラッグ)してください。また、AdColonyを利用する全てのターゲットにチェックを入れてください。
 
@@ -77,7 +82,7 @@ pod 'AdColony', '~> 3.1.0'
 
 ![Architectures and Base SDK version](assets/architectures.png)
 
-#### 2. 必須の依存ライブラリをリンク ####
+##### 必須の依存ライブラリをリンク
 
 **Target > Build Phases > Link Binary With Libraries** を開いて、下記のライブラリとフレームワークを追加してください。
 
@@ -98,7 +103,7 @@ pod 'AdColony', '~> 3.1.0'
 
 ![Frameworks and libraries](assets/frameworks-libraries.png)
 
-#### 3. リンカーフラグを追加 ####
+##### リンカーフラグを追加
 
 AdColony SDK はクラスローディングの機能を利用します。したがって以下のリンカーフラグを **Target > Build Settings > Linking > Other Linker Flags** に追加する必要があります。
 
@@ -107,7 +112,7 @@ AdColony SDK はクラスローディングの機能を利用します。した�
 
 ![Configure Linker Flags](assets/linker-flags.png)
 
-#### 4. サポートする端末の向きを設定 ####
+### Step 2: サポートする端末の向きを設定
 
 AdColony SDKはあなたのアプリが全ての端末の向きをサポートすることを要求します。これはAdColonyの広告があらゆる向きで表示される可能性があり、AdColonyのview controllerがあなたのアプリに同じ挙動を要求するからです。この要求は、あなたのアプリのインターフェースが全ての向きに対応するように指示しているわけではないことに注意してください。ただあなたのview controllerの`supportedInterfaceOrientations`メソッドで共通設定をオーバーライドする必要があるだけです。
 
@@ -123,12 +128,12 @@ AdColony SDKはあなたのアプリが全ての端末の向きをサポート�
 @implementation AppDelegate
 /* Class body ... */
 
--(UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
+- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
     return UIInterfaceOrientationMaskAll;
 }
 ```
 
-#### 5. App Transport Security (ATS) と iOS 10 ####
+### Step 3: App Transport Security (ATS) の設定 ####
 
 iOS 9のリリースと共にAppleはATSを導入しました。ATSはアプリにSSLによるセキュアなネットワーク接続をするよう要求するものであり、SSLのバージョン、暗号化方式、およびキーの長さについてATSの仕様に則ってHTTPS接続を強制します。iOSではATSがデフォルトで有効になっていますが、現在のところAppleによって要求されたり強制されたりはしていません。AdColonyでは、次の2つの方法のいずれかを正しく設定することが重要です。
 
@@ -168,7 +173,7 @@ iOS 10でATSを有効のまま利用したい開発者は、下記の項目をIn
 > 
 > 様々なウェブコンテンツを表示する必要があるが NSAllowsArbitraryLoadsInWebContent がiOS 9で利用できないため
 
-#### 6. AdColonyが利用するURLスキームの設定を追加 ####
+### Step 4: AdColonyが利用するURLスキームの設定
 
 iOS 9のリリースと共にAppleは`canOpenURL:` APIの使用についても制限するようになりました。AdColonyはDynamic End Cards (DECs)からユーザが特定のアプリを開けるかどうかを判断するためにこのAPIを使用しています。例えば、新しい映画のための広告があり、そのDECがTwitterアプリを利用してユーザにその映画についてtweetできるような機能を提示することができます。このような機能はiOS 9ではまだ利用可能ですが、パブリッシャはAdColonyがリンクされてるアプリに対して、それぞれのURLスキームをplistファイルで認可しなければなりません。URLスキームが追加されてない場合、代わりにユーザはWEBサイトに連れて行かれてしまうことに注意してください。これは例えばサイトにログインしないといけないなどの望ましくないユーザエクスペリエンスを招く可能性があります。AdColony SDKがアプリへのdeep-linkingを可能にするために、以下の項目をアプリのplistに追加してください。
 
@@ -182,7 +187,7 @@ iOS 9のリリースと共にAppleは`canOpenURL:` APIの使用についても�
 </array>
 ```
 
-#### 7. プライバシーコントロールの設定を追加 ####
+### Step 5: プライバシーコントロールの設定
 
 iOS 10のリリースに伴い、Appleはカメラやフォトライブラリなどの機能へのアクセスを制限することによってプライバシー管理の範囲を拡張しました。これらの機能を活用してリッチで没入的な体験をユーザに届けるために、以下の項目をアプリのplistファイルに追加してください。
 
@@ -493,7 +498,7 @@ PRIMARY KEY (`id`)
 
 ## APIリファレンス ##
 
-SDKのAPIリファレンスは[こちら](https://adcolony-www-common.s3.amazonaws.com/Appledoc/3.1.0/index.html)をご参照ください。
+SDKのAPIリファレンスは[こちら](https://adcolony-www-common.s3.amazonaws.com/Appledoc/3.2.0/index.html)をご参照ください。
 
 ## よくある質問 ##
 
