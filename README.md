@@ -17,10 +17,10 @@ AdColonyはゼロバッファリング、[フルスクリーンのInstant-Play�
 
 - いくつかのバグの修正と安定性・セキュリティの改善に加えて、iOS 11の互換性
 - スキップ機能の改善と新しいミュート/ミュート解除機能によるユーザーエクスペリエンスの向上
-- インストール後のイベントAPI
+- インストール後イベント (PIE) APIのサポート
 - クラッシュレポートと新しい便利なテストモード機能
 
-過去のバージョンの[リリースノート](https://github.com/AdColony/AdColony-Android-SDK-3/blob/master/CHANGELOG.md)
+過去のバージョンの[リリースノート](https://github.com/AdColony/AdColony-iOS-SDK-3/blob/master/CHANGELOG.md)
 
 ## アップグレード
 
