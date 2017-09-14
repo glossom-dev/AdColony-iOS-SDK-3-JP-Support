@@ -1,11 +1,11 @@
 ![AdColony Logo and Title](assets/logo-title.png)
 
-最終更新日: 2017/08/24  
-SDKバージョン: 3.2.0
+最終更新日: 2017/09/11  
+SDKバージョン: 3.2.1
 
 ## ダウンロード
 
-[https://github.com/AdColony/AdColony-iOS-SDK-3/releases/tag/v3.2.0](https://github.com/AdColony/AdColony-iOS-SDK-3/releases/tag/v3.2.0)
+[https://github.com/AdColony/AdColony-iOS-SDK-3/releases/tag/v3.2.1](https://github.com/AdColony/AdColony-iOS-SDK-3/releases/tag/v3.2.1)
 
 ## 概要
 
@@ -30,15 +30,15 @@ AdColonyはゼロバッファリング、[フルスクリーンのInstant-Play�
 
 ### SDK 3.X から
 
-以前のSDK 3.xからSDK 3.2.0へのアップデートでは、コードを変更する必要はありません。CocoaPodsを利用していない場合は、Xcodeプロジェクトにフレームワークをドラッグアンドドロップするだけです。Cocoapodsを利用している場合でも、`pod update`を実行して最新のものと同期するだけです。
+以前のSDK 3.xからSDK 3.2へのアップデートでは、コードを変更する必要はありません。CocoaPodsを利用していない場合は、Xcodeプロジェクトにフレームワークをドラッグアンドドロップするだけです。Cocoapodsを利用している場合でも、`pod update`を実行して最新のものと同期するだけです。
 
 ## Getting Started
 
 ### Notes ###
 
-- SDK 3.2は、iOS 11 Beta 7バージョンでテストおよび検証されています
-- SDK 3.2はiOS 6でコンパイルされます。ただし、動画広告はiOS 7以上でのみ表示されます
-- SDK 3.2は、主要なAPIの変更により、AdColony 2.Xと下位互換性がありません
+- SDK 3.2.1は、iOS 11 Beta 10バージョンでテストおよび検証されています
+- SDK 3.2.1はiOS 6でコンパイルされます。ただし、動画広告はiOS 8以上でのみ表示されます
+- SDK 3.2.1は、主要なAPIの変更により、AdColony 2.Xと下位互換性がありません
 
 ----
 
