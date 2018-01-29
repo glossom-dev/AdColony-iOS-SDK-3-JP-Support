@@ -1,11 +1,11 @@
 ![AdColony Logo and Title](assets/logo-title.png)
 
-最終更新日: 2017/09/11  
-SDKバージョン: 3.2.1
+最終更新日: 2018/01/29  
+SDKバージョン: 3.3.0
 
 ## ダウンロード
 
-[https://github.com/AdColony/AdColony-iOS-SDK-3/releases/tag/v3.2.1](https://github.com/AdColony/AdColony-iOS-SDK-3/releases/tag/v3.2.1)
+[https://github.com/AdColony/AdColony-iOS-SDK-3/releases/tag/v3.3.0](https://github.com/AdColony/AdColony-iOS-SDK-3/releases/tag/v3.3.0)
 
 ## 概要
 
@@ -13,14 +13,20 @@ AdColonyはゼロバッファリング、[フルスクリーンのInstant-Play�
 
 ## リリースノート
 
-### SDK 3.2 の主な機能:
+### SDK 3.3 の主な機能:
 
-- いくつかのバグの修正と安定性・セキュリティの改善に加えて、iOS 11の互換性
-- スキップ機能の改善と新しいミュート/ミュート解除機能によるユーザーエクスペリエンスの向上
-- インストール後イベント (PIE) APIのサポート
-- クラッシュレポートと新しい便利なテストモード機能
+- ビューアビリティ測定ためのIASを追加（Integral Ad Science）
+- iphoneX対応
+- いくつかのバグの修正、メモリ使用の最適化、安定性の改善
 
 過去のバージョンの[リリースノート](https://github.com/AdColony/AdColony-iOS-SDK-3/blob/master/CHANGELOG.md)
+
+## はじめに
+英語の実装マニュアルはこちら[https://github.com/AdColony/AdColony-iOS-SDK-3/wiki](https://github.com/AdColony/AdColony-iOS-SDK-3/wiki)
+### 注意
+- SDK 3.3.0がiOS11でテストおよび検証されました
+- SDK 3.3.0はiOS6でもコンパイルできるが、動画広告はiOS8以上でのみ表示されます
+- SDK 3.3.0は、主要なAPIの変更によりAdColony 2.0統合と下位互換性がありません
 
 ## アップグレード
 
@@ -67,7 +73,7 @@ AdColonyはゼロバッファリング、[フルスクリーンのInstant-Play�
 ```bash
 pod 'AdColony'
 ```
- 
+
 #### CocoaPodsを使わない方法
 
 1. FrameworkをXcodeプロジェクトに追加
@@ -91,12 +97,14 @@ pod 'AdColony'
 * `AdSupport.framework`
 * `AudioToolbox.framework`
 * `AVFoundation.framework`
+* `CoreMedia.framework`
 * `CoreTelephony.framework`
-* `EventKit.framework`
-* `JavaScriptCore.framework` (Set to Optional)
+* `EventKit.framework` (Set to Optional)
+* `JavaScriptCore.framework`
 * `MessageUI.framework`
-* `Social.framework`
-* `StoreKit.framework`
+* `MobileCoreServices.framework`
+* `Social.framework` (Set to Optional)
+* `StoreKit.framework` (Set to Optional)
 * `SystemConfiguration.framework`
 * `WatchConnectivity.framework` (Set to Optional)
 * `WebKit.framework` (Set to Optional)
@@ -156,13 +164,13 @@ iOS 10では、`NSAllowsArbitraryLoadsInWebContent`と`NSAllowsLocalNetworking`�
 iOS 10でATSを有効のまま利用したい開発者は、下記の項目をInfo.plistファイルに追加する必要があります。
 
 ```xml
-<key>NSAppTransportSecurity</key> 
+<key>NSAppTransportSecurity</key>
 <dict>
-    <key>NSAllowsArbitraryLoads</key> 
-    <true/> 
-    <key>NSAllowsLocalNetworking</key> 
-    <true/> 
-    <key>NSAllowsArbitraryLoadsInWebContent</key> 
+    <key>NSAllowsArbitraryLoads</key>
+    <true/>
+    <key>NSAllowsLocalNetworking</key>
+    <true/>
+    <key>NSAllowsArbitraryLoadsInWebContent</key>
     <true/>
 </dict>
 ```
@@ -170,7 +178,7 @@ iOS 10でATSを有効のまま利用したい開発者は、下記の項目をIn
 ただし、`NSAllowsArbitraryLoadsInWebContent`をYESで追加することにより、アプリの審査の過程で「正当な理由」をAppleから求められることになります。その際は正当な理由として次の内容を説明する事をお勧めします。
 
 > Must provide embedded web content from a variety of sources, but cannot use a class supported by the NSAllowsArbitraryLoadsInWebContent key.
-> 
+>
 > 様々なウェブコンテンツを表示する必要があるが NSAllowsArbitraryLoadsInWebContent がiOS 9で利用できないため
 
 ### Step 4: AdColonyが利用するURLスキームの設定
@@ -230,8 +238,8 @@ Glossomがお渡しするapp IDとzone IDを使ってAdColony SDKの環境設定
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     /* Method body ... */
 
-    [AdColony configureWithAppID:/* App ID */ 
-              zoneIDs:@[/* Zone IDs */] 
+    [AdColony configureWithAppID:/* App ID */
+              zoneIDs:@[/* Zone IDs */]
               options:nil
               completion:^(NSArray<AdColonyZone*>* zones) {}
     ];
@@ -419,47 +427,47 @@ open\_udid、udid、odin1、mac\_sha1 についてはAndroidにおいて常に�
 
     $MY_SECRET_KEY="Thiscomesfromadcolony.com";
 
-    $trans_id=mysql_real_escape_string($_GET['id']); 
-    $dev_id=mysql_real_escape_string($_GET['uid']); 
-    $amt=mysql_real_escape_string($_GET['amount']); 
-    $currency=mysql_real_escape_string($_GET['currency']); 
+    $trans_id=mysql_real_escape_string($_GET['id']);
+    $dev_id=mysql_real_escape_string($_GET['uid']);
+    $amt=mysql_real_escape_string($_GET['amount']);
+    $currency=mysql_real_escape_string($_GET['currency']);
     $verifier=mysql_real_escape_string($_GET['verifier']);
     $custom_id = mysql_real_escape_string($_GET['custom_id']);
 
-    //ハッシュ値の検証 
-    $test_string="".$trans_id.$dev_id.$amt.$currency.$MY_SECRET_KEY.$custom_id; 
+    //ハッシュ値の検証
+    $test_string="".$trans_id.$dev_id.$amt.$currency.$MY_SECRET_KEY.$custom_id;
     $test_result=md5($test_string);
     if($test_result!=$verifier)
     {
       echo"vc_decline";
-      die; 
+      die;
     }
 
-    //ユーザの不正検知 
-    $user_id=//get your internal user id from the device id here 
+    //ユーザの不正検知
+    $user_id=//get your internal user id from the device id here
     if(!$user_id)
     {
       echo"vc_decline";
-      die; 
+      die;
     }
 
-    //トランザクションを保存 
+    //トランザクションを保存
     $query="INSERT INTO AdColony_Transactions(id,amount,name,user_id,time)".
-      "VALUES($trans_id,$amt,'$currency',$user_id,UTC_TIMESTAMP())"; 
+      "VALUES($trans_id,$amt,'$currency',$user_id,UTC_TIMESTAMP())";
     $result=mysql_query($query);
     if(!$result)
     {
-      //トランザクションが重複していた場合 
+      //トランザクションが重複していた場合
       if(mysql_errno()==1062)
       {
         echo"vc_success";
-        die; 
+        die;
       }
-      //重複していないがレコード作成に失敗した場合。AdColonyがリトライできるように 
+      //重複していないがレコード作成に失敗した場合。AdColonyがリトライできるように
       else
       {
         echo"mysql error number".mysql_errno();
-        die; 
+        die;
       }
     }
     //ユーザにリワードを付与したのち"vc_success"をレスポンス
@@ -545,10 +553,10 @@ options.userID = @"/* custom_id */";
 ```
 - "vc_success"
 正常に処理が終わり、ユーザーへのコイン付与が成功した場合、AdColony側から再送信を行いません。
-	
+
 - "vc_decline" または "vc_noreward"
 正常に処理が終わったが、uidの誤り/不正と判断された場合、AdColony側から再送信を行いません。
-	
+
 - [上記以外に、他にレスポンスされる場合]
 AdColonyは定期的に再送信行います。異常な場合以外は、こちら利用は控えて下さい。
 ```
